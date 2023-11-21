@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -7,7 +8,7 @@ class Category(models.Model):
     Содержит название и родительские категории."""
 
     title = models.CharField(max_length=255)
-    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
@@ -26,7 +27,7 @@ class Product(models.Model):
         max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
     )
 
-    def get_categories_path(self):
+    def get_categories(self):
         """
         Возвращает категорию товара и все родительские категории.
 
