@@ -1,9 +1,11 @@
 from core.models import Category, Product
 
+# Функции для заполнения базы данных
+
 
 def create_categories():
     """
-    Создает категории и назначает родительские категории.
+    Создает категории.
     """
 
     category = """id:title:parent
@@ -13,18 +15,21 @@ def create_categories():
     4:Посуда для кухни:5
     5:Товары для дома:None"""
 
-    # Create categories without assigning parent
-    categories = {}
-    for line in category.split("\n")[1:]:  # Skip the header line
-        id, title, parent = line.split(":")
-        categories[id] = Category.objects.create(title=title)
+    # Разбиение на строки с пропуском первой строки
+    lines = category.splitlines()[1:]
 
-    # Update parent for each category
-    for id, category in categories.items():
-        parent_id = category.parent_id
-        if parent_id and parent_id != "None":
-            category.parent = categories[parent_id]
-            category.save()
+    # Создание категорий в базе данных.
+    # Цикл проходит в обратном порядке, от крупных категорий к меньшим.
+    for line in reversed(lines):
+        id, title, parent = line.split(":")
+        parent_category = None
+        if parent != "None":
+            parent_category = Category.objects.get(id=parent)
+        Category.objects.create(
+            id=id,
+            title=title,
+            parent=parent_category,
+        )
 
 
 def create_products():
@@ -38,16 +43,17 @@ def create_products():
     3:Тарелка 25см:3:1000:25
     4:Кастрюля 3л:2:55:300.78"""
 
-    for line in products.split("\n")[1:]:  # Skip the header line
+    # Разбиение на строки с пропуском первой строки
+    lines = products.splitlines()[1:]
+
+    # Заполнение категорий в базе данных
+    for line in lines:
         id, title, category_id, count, cost = line.split(":")
-        try:
-            category = Category.objects.get(id=category_id)
-            Product.objects.create(
-                id=id,
-                title=title,
-                category=category,
-                count=int(count),
-                cost=float(cost),
-            )
-        except Category.DoesNotExist:
-            print(f"Category with id {category_id} does not exist")
+        category = Category.objects.get(id=category_id)
+        Product.objects.create(
+            id=id,
+            title=title,
+            category=category,
+            count=int(count),
+            cost=float(cost),
+        )

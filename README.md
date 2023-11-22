@@ -114,10 +114,15 @@ python manage.py makemigrations
 ```
 python manage.py migrate
 ```
-   
-4. Запустите сервер разработки:
+
+4. Для заполнения базы данных используйте команду:
+```python
+python manage.py fill_database
+```
+
+5. Запустите сервер разработки:
 ```
 python manage.py runserver
 ```
 
-Получите доступ к приложению в веб-браузере по адресу `http://localhost:8000`.
+6. Получите доступ к приложению в веб-браузере по адресу `http://localhost:8000`.

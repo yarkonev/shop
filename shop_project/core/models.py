@@ -3,8 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Category(models.Model):
-    """Категория товара.
-    Содержит название и родительские категории."""
+    """Категория товара. Содержит название и родительские категории."""
 
     title = models.CharField(max_length=255)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
@@ -14,8 +13,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    """Товар.
-    Содержит название, категорию, количество и цену."""
+    """Товар. Содержит название, категорию, количество и цену."""
 
     title = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
@@ -27,14 +25,13 @@ class Product(models.Model):
     )
 
     def get_categories(self) -> str:
-        """
-        Возвращает категорию товара и все родительские категории.
-        """
+        """Возвращает категорию товара и ее родительские категории."""
+
         category_path = [self.category.title]
-        current_category = self.category.parent
-        while current_category is not None:
-            category_path.append(current_category.title)
-            current_category = current_category.parent
+        parent_category = self.category.parent
+        while parent_category != None:
+            category_path.append(parent_category.title)
+            parent_category = parent_category.parent
         return " · ".join(reversed(category_path))
 
     def __str__(self) -> str:
