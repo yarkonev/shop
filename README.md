@@ -95,18 +95,18 @@ poetry shell && poetry install
 
 ## Использование
 
-Сгенерируйте секретный ключ Django:
+1. Сгенерируйте секретный ключ Django:
 ```
 python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
 ```
 
-Создайте в корневой директории проекта файл `.env` со следующим содержимым:
+2. Создайте в корневой директории проекта файл `.env` со следующим содержимым:
 ```
 SECRET_KEY=вставьте ваш секретный ключ
 DEBUG=True
 ```
 
-Настройте базу данных:
+3. Настройте базу данных:
 ```
 python manage.py makemigrations
 ```
@@ -115,7 +115,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
    
-Запустите сервер разработки:
+4. Запустите сервер разработки:
 ```
 python manage.py runserver
 ```
