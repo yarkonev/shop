@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -10,7 +9,7 @@ class Category(models.Model):
     title = models.CharField(max_length=255)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -27,12 +26,9 @@ class Product(models.Model):
         max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
     )
 
-    def get_categories(self):
+    def get_categories(self) -> str:
         """
         Возвращает категорию товара и все родительские категории.
-
-        :return: The path of categories for the current category, joined by " · ".
-        :rtype: str
         """
         category_path = [self.category.title]
         current_category = self.category.parent
@@ -41,5 +37,5 @@ class Product(models.Model):
             current_category = current_category.parent
         return " · ".join(reversed(category_path))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title

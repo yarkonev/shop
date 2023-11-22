@@ -2,6 +2,10 @@ from core.models import Category, Product
 
 
 def create_categories():
+    """
+    Создает категории и назначает родительские категории.
+    """
+
     category = """id:title:parent
     1:Велосипеды:None
     2:Кастрюли:4
@@ -24,6 +28,10 @@ def create_categories():
 
 
 def create_products():
+    """
+    Заполняет категории товарами.
+    """
+
     products = """id:title:category_id:count:cost
     1:Велосипед:1:100:100.50
     2:Кастрюля 1,5л:2:50:1200
