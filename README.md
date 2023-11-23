@@ -106,7 +106,7 @@ SECRET_KEY=вставьте ваш секретный ключ
 DEBUG=True
 ```
 
-3. Настройте базу данных:
+3. Перейдите в директорию `shop_project` и настройте базу данных:
 ```
 python manage.py makemigrations
 ```
@@ -117,7 +117,7 @@ python manage.py migrate
 
 4. Для заполнения базы данных используйте команду:
 ```python
-python manage.py fill_database
+python manage.py fill_db
 ```
 
 5. Запустите сервер разработки:
